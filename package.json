@@ -1,7 +1,7 @@
 {
   "name": "typed-adwords",
   "version": "0.1.0",
-  "description": "Exclude Poor AdWords placements based on terms.",
+  "description": "TypeScript definitions for writing AdWords scripts!",
   "main": "script/index.ts",
   "scripts": {
     "install": "typings install"
