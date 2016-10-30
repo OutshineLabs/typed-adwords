@@ -1,0 +1,20 @@
+{
+  "name": "typed-adwords",
+  "version": "0.1.0",
+  "description": "Exclude Poor AdWords placements based on terms.",
+  "main": "script/index.ts",
+  "scripts": {
+    "install": "typings install"
+  },
+  "keywords": [
+    "AdWords",
+    "TypeScript"
+  ],
+  "author": "Dawson Reid <dawson@outshine.ca>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:OutshineLabs/typed-adwords.git"
+  },
+  "homepage": "https://github.com/OutshineLabs/typed-adwords"
+}
