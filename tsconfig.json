@@ -9,7 +9,7 @@
     },
     "files": [
       "./typings/index.d.ts",
-      "./script/index.d.ts"
+      "./index.d.ts"
     ],
     "exclude": [
         "node_modules"
