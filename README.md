@@ -4,7 +4,20 @@
 This module exposes TypeScript type definitions to the AdWords script APIs. Statically typed scripts
 allow you to catch typos at compile time, and help your editor to understand the AdWords API.
 
+**Note :** This module is experimental and incomplete.
 
+## Examples
+
+#### Autocomplete
+
+![Example Autocomplete](https://github.com/OutshineLabs/typed-adwords/blob/master/examples/autocomplete_example.gif?raw=true)
+
+#### Compile time checking
+
+![Example Compile Time Check](https://github.com/OutshineLabs/typed-adwords/blob/master/examples/compile_check_example.gif?raw=true)
+
+The above examples demonstrate the usefulness of this package when using [Atom](https://atom.io/)
+and the [Atom TypeScript](https://atom.io/packages/atom-typescript) package.
 
 ## Installation
 
