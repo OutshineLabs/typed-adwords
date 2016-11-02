@@ -410,7 +410,12 @@ declare namespace AdWordsScripts {
     }
 
     interface AdWordsApp {
+      adGroups(): AdWordsSelector<AdGroup>;
+      ads(): AdWordsSelector<Ad>;
       campaigns(): AdWordsSelector<Campaign>;
+      createLabel(name: string, description?: string, backgroundColor?: string): void;
+      keywords(): AdWordsSelector<Keyword>;
+      labels(): AdWordsSelector<Label>;
       report(query, options?: ReportQueryOptions): Report;
     }
   }
