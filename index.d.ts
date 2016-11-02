@@ -17,21 +17,41 @@ declare namespace AdWordsScripts {
     withIds(ids: number[]): AdWordsBasicSelector<T>;
   }
 
-  type AdWordsDateObject = {
-    year: string,
-    month: string,
-    day: string
+  type AdWordsDate = {
+    year: number,
+    month: number,
+    day: number
   };
 
   interface AdWordsSelector<T extends AdWordsEntity> {
     forDateRange(dateRande: string): AdWordsSelector<T>;
-    forDateRange(dateFrom: string | AdWordsDateObject, dateTo: string | AdWordsDateObject): AdWordsSelector<T>;
+    forDateRange(dateFrom: string | AdWordsDate, dateTo: string | AdWordsDate): AdWordsSelector<T>;
     get(): AdWordsIterator<T>;
     orderBy(orderBy: string): AdWordsSelector<T>;
     withCondition(condition: string): AdWordsSelector<T>;
     withIds(ids: number[]): AdWordsSelector<T>;
     withLimit(limit: number): AdWordsSelector<T>;
   }
+
+  interface AdWordsOperation<T extends AdWordsEntity> {
+    getErrors(): string[];
+    getResults(): T | null;
+    isSuccessful(): boolean;
+  }
+
+  type DateRange =
+      "TODAY"
+    | "YESTERDAY"
+    | "LAST_7_DAYS"
+    | "THIS_WEEK_SUN_TODAY"
+    | "LAST_WEEK"
+    | "LAST_14_DAYS"
+    | "LAST_30_DAYS"
+    | "LAST_BUSINESS_WEEK"
+    | "LAST_WEEK_SUN_SAT"
+    | "THIS_MONTH"
+    | "LAST_MONTH"
+    | "ALL_TIME";
 
   export module AdWordsApp {
 
@@ -130,7 +150,7 @@ declare namespace AdWordsScripts {
 
       // FIXME : Should return a Stats object.
       getStatsFor(dateRange: string): any;
-      getStatsFor(dateFrom: string | AdWordsDateObject, dateTo: string | AdWordsDateObject): any;
+      getStatsFor(dateFrom: string | AdWordsDate, dateTo: string | AdWordsDate): any;
 
       getType(): AdType;
       isEnabled(): boolean;
@@ -151,85 +171,242 @@ declare namespace AdWordsScripts {
       urls(): any;
     }
 
+    // TODO : Define Sitelink
+    type Sitelink = any;
+
+    // TODO : Define AdGroupBidding
+    type AdGroupBidding = any;
+
+    // TODO : Define AdGroupDevices
+    type AdGroupDevices = any;
+
+    // TODO : Define AdGroupDisplay
+    type AdGroupDisplay = any;
+
+    // TODO : Define AdGroupExtensions
+    type AdGroupExtensions = any;
+
+    type Stats = any;
+
+    type NegativeKeyword = any;
+
+    type AdBuilderSpace = any;
+
+    type KeywordBuilder = any;
+
+    type AdGroupTargeting = any;
+
+    type AdGroupUrls = any;
+
     interface AdGroup extends AdWordsEntity {
       adParams(): AdParamSelector;
-
-      // FIXME : This should take a CalloutExtension and return a CalloutOperation
-      addCallout(calloutExtension: any): any;
-      // FIXME : This should take a MobileAppExtension and return a MobileApp
-      addMobileApp(mobileAppExtension: any): any;
-      // FIXME : This should take a PhoneNumberExtension and return a PhoneNumber
-      addPhoneNumber(phoneNumberExtension: any): any;
-      // FIXME : This should take a ReviewExtension and return a Review
-      addReview(reviewExtension: any): any;
-      // FIXME : This should take a SitelinkExtension and return a SitelinkOperation
-      addSitelink(sitelinkExtension: any): any;
-
+      addCallout(calloutExtension: Callout): AdWordsOperation<Callout>;
+      addMobileApp(mobileAppExtension: MobileApp): AdWordsOperation<MobileApp>;
+      addPhoneNumber(phoneNumberExtension: PhoneNumber): AdWordsOperation<PhoneNumber>;
+      addReview(reviewExtension: Review): AdWordsOperation<Review>;
+      addSitelink(sitelinkExtension: Sitelink): AdWordsOperation<Sitelink>;
       ads(): AdWordsSelector<Ad>;
       applyLabel(label: string): void;
-
-      // FIXME : This should return AdGroupBidding
-      bidding(): any;
-
+      bidding(): AdGroupBidding;
       createNegativeKeyword(keywordText): void;
-
-      // FIXME : This should return AdGroupDevices
-      devices(): any;
-      // FIXME : This should return AdGroupDisplay
-      display(): any;
-
+      devices(): AdGroupDevices;
+      display(): AdGroupDisplay;
       enable(): void;
-
-      // FIXME : This should return AdGroupExtensions
-      extensions(): any;
-
+      extensions(): AdGroupExtensions;
       getCampaign(): Campaign;
       getId(): number;
       getName(): string;
-
-      // FIXME : These should return Stats
-      getStatsFor(dateRange: string): any;
-      getStatsFor(dateFrom: string | AdWordsDateObject, dateTo: string | AdWordsDateObject): any;
-
+      getStatsFor(dateRange: string): Stats;
+      getStatsFor(dateFrom: string | AdWordsDate, dateTo: string | AdWordsDate): Stats;
       isEnabled(): boolean;
       isPaused(): boolean;
       isRemoved(): boolean;
       keywords(): AdWordsSelector<Keyword>;
-
-      // FIXME : This should return a AdWordsSelector<NegativeKeyword>
-      negativeKeywords(): any;
-      // FIXME : This should return an AdBuilderSpace
-      newAd(): any;
-      // FIXME: This should return a KeywordBuilder
-      newKeywordBuilder(): any;
-
+      negativeKeywords(): AdWordsSelector<NegativeKeyword>;
+      newAd(): AdBuilderSpace;
+      newKeywordBuilder(): KeywordBuilder;
       pause(): void;
-
-      // FIXME : This should take a CalloutExtension and return a Callout
-      removeCallout(calloutExtension: any): any;
-
+      removeCallout(calloutExtension: Callout): void;
       removeLabel(label: string): void;
-
-      // FIXME : This should take a MobileAppExtension and return a MobileApp
-      removeMobileApp(mobileAppExtension: any): any;
-      // FIXME : This should take a PhoneNumberExtension and return a PhoneNumber
-      removePhoneNumber(phoneNumberExtension: any): any;
-      // FIXME : This should take a ReviewExtension and return a Review
-      removeReview(reviewExtension: any): any;
-      // FIXME : This should take a SitelinkExtension and return a SitelinkOperation
-      removeSitelink(sitelinkExtension: any): any;
-
+      removeMobileApp(mobileAppExtension: MobileApp): void;
+      removePhoneNumber(phoneNumberExtension: PhoneNumber): void;
+      removeReview(reviewExtension: Review): void;
+      removeSitelink(sitelinkExtension: Sitelink): void;
       setName(name: string): void;
-
-      // FIXME : This should return AdGroupTargeting
-      targeting(): any;
-      // FIXME : This should return AdGroupUrls
-      urls(): any;
+      targeting(): AdGroupTargeting;
+      urls(): AdGroupUrls;
     }
+
+    type DayOfWeek =
+        "MONDAY"
+      | "TUESDAY"
+      | "WEDNESDAY"
+      | "THURSDAY"
+      | "FRIDAY"
+      | "SATURDAY"
+      | "SUNDAY";
+
+    // TODO : Define AdSchedule interface
+    type AdSchedule = any;
+
+    type AdScheduleObject = {
+      dayOfWeek: DayOfWeek,
+      startHour: number,
+      startMinute: number,
+      endHour: number,
+      endNumber: number,
+      bidModifier?: number
+    };
+
+    // TODO : Define Callout interface
+    type Callout = any;
+
+    // TODO : Define ExcludedPlacementList
+    type ExcludedPlacementList = any;
+
+    // TODO : Define TargetedLocation interface
+    type TargetedLocation = any;
+
+    // TODO : Define ExcludedLocation interface
+    type ExcludedLocation = any;
+
+    type LocationObject = {
+      id: number,
+      bidModifier?: number
+    };
+
+    // TODO : Define MobileApp
+    type MobileApp = any;
+
+    // TODO : Define NegativeKeywordList
+    type NegativeKeywordList = any;
+
+    // TODO : Define PhoneNumber
+    type PhoneNumber = any;
+
+    // TODO : Define TargetedProximity
+    type TargetedProximity = any;
+
+    type RadiusUnits = "MILES" | "KILOMETERS";
+
+    type AddressObject = {
+      streetAddress?: string,
+      streetAddress2?: string,
+      cityName?: string,
+      provinceName?: string,
+      provinceCode?: string,
+      postalCode?: string,
+      countryCode?: string
+    };
+
+    type TargetedProximityObject = {
+      latitude: number,
+      longitude: number,
+      radius: number,
+      radiusUnits: RadiusUnits,
+      bidModifier?: number,
+      address?: AddressObject
+    };
+
+    // TODO : Define Review
+    type Review = any;
+
+    type ReviewOperation = AdWordsOperation<Review>;
+
+    type CampaignBidding = any;
+
+    type CampaignDisplay = any;
+
+    type CampaignExtensions = any;
+
+    type AdRotationType =
+        "OPTIMIZE"
+      | "CONVERSION_OPTIMIZE"
+      | "ROTATE"
+      | "ROTATE_FOREVER";
+
+    type BiddingStrategyType =
+        "MANUAL_CPC"
+      | "MANUAL_CPM"
+      | "BUDGET_OPTIMIZER"
+      | "CONVERSION_OPTIMIZER"
+      | "PERCENT_CPA";
+
+    type Budget = any;
+
+    type Label = any;
+
+    type AdGroupBuilder = any;
+
+    type CampaignTargeting = any;
+
+    type CampaignUrls = any;
 
     interface Campaign extends AdWordsEntity {
       adGroups(): AdWordsSelector<AdGroup>;
+      addAdSchedule(schedule: AdSchedule | AdScheduleObject): AdWordsOperation<AdSchedule>;
+      addAdSchedule(
+        dayOfWeek: DayOfWeek,
+        startHour: number,
+        startMinute: number,
+        endHour: number,
+        endMinute: number,
+        bidModifier?: number): AdWordsOperation<AdSchedule>;
+      addCallout(calloutExtension: Callout): AdWordsOperation<Callout>;
+      addExcludedPlacementList(excludedPlacementList: ExcludedPlacementList): void;
+      addLocation(location: number | TargetedLocation | ExcludedLocation | LocationObject): AdWordsOperation<TargetedLocation>;
+      addLocation(locationId: number, bidModifier?: number): AdWordsOperation<TargetedLocation>;
+      addMobileApp(mobileAppExtension: MobileApp): AdWordsOperation<MobileApp>;
+      addNegativeKeywordList(negativeKeywordList: NegativeKeywordList): void;
+      addPhoneNumber(phoneNumber: PhoneNumber): AdWordsOperation<PhoneNumber>;
+      addProximity(proximity: TargetedProximity | TargetedProximityObject): AdWordsOperation<TargetedProximity>;
+      addProximity(latitude: number, longitude: number, radius: number, radiusUnits: RadiusUnits, optArgs?: {
+        bidModifier?: number,
+        address?: AddressObject
+      }): AdWordsOperation<TargetedProximity>;
+      addReview(reviewExtension: Review): AdWordsOperation<Review>;
+      addSitelink(sitelinkExtension: Sitelink): AdWordsOperation<Sitelink>;
       ads(): AdWordsSelector<Ad>;
+      applyLabel(label: string): void;
+      bidding(): CampaignBidding;
+      createNegativeKeyword(keywordText: string): void;
+      display(): CampaignDisplay;
+      enable(): void;
+      excludeLocation(locationOrId: number | TargetedLocation | ExcludedLocation | LocationObject): AdWordsOperation<ExcludedLocation>;
+      excludedPlacementLists(): AdWordsSelector<ExcludedPlacementList>;
+      extensions(): CampaignExtensions;
+      getAdRotationType(): AdRotationType;
+      getBiddingStategyType(): BiddingStrategyType;
+      getBudget(): Budget;
+      getEndDate(): AdWordsDate;
+      getId(): number;
+      getName(): string;
+      getStartDate(): AdWordsDate;
+      getStatsFor(dateRange: DateRange): Stats;
+      getStatsFor(dateFrom: string| AdWordsDate, dateTo: string | AdWordsDate): Stats;
+      isEnabled(): boolean;
+      isPaused(): boolean;
+      isRemoved(): boolean;
+      keywords(): AdWordsSelector<Keyword>;
+      labels(): AdWordsSelector<Label>;
+      negativeKeywordLists(): AdWordsSelector<NegativeKeywordList>;
+      negativeKeywords(): AdWordsSelector<NegativeKeyword>;
+      newAdGroupBuilder(): AdGroupBuilder;
+      pause(): void;
+      removeCallout(calloutExtension: Callout): void;
+      removeExcludedPlacementList(excludedPlacementList: ExcludedPlacementList): void;
+      removeLabel(name: string): void;
+      removeMobileApp(mobileAppExtension: MobileApp): void;
+      removeNegativeKeywordList(negativeKeywordList: NegativeKeywordList): void;
+      removePhoneNumber(phoneNumberExtension: PhoneNumber): void;
+      removeReview(reviewExtension: Review): void;
+      removeSitelink(sitelinkExtension: Sitelink): void;
+      setAdRotationType(adRotationType: AdRotationType): void;
+      setEndDate(endDate: string | AdWordsDate): void;
+      setName(name: string): void;
+      setStartDate(startDate: string | AdWordsDate): void;
+      targeting(): CampaignTargeting;
+      urls(): CampaignUrls;
     }
 
     interface AdWordsApp {
@@ -264,7 +441,7 @@ declare namespace AdWordsScripts {
       getCurrencyCode(): string;
       getCustomerId(): string;
       getName(): string;
-      getStatsFor(dateRange: string): ManagedAccountStats;
+      getStatsFor(dateRange: DateRange): ManagedAccountStats;
       getStatsFor(dateFrom: string, dateTo: string): ManagedAccountStats;
       getTimeZone(): string;
       labels(): AccountLabelSelector;
@@ -273,7 +450,7 @@ declare namespace AdWordsScripts {
 
     interface ManagedAccountSelector extends AdWordsSelector<ManagedAccount> {
       executeInParallel(functionName: string, optionalCallbackFunctionName?: string, optionalInput?: string): void;
-      forDateRange(dateRande: string): ManagedAccountSelector;
+      forDateRange(dateRande: DateRange): ManagedAccountSelector;
       forDateRange(dateFrom: string, dateTo: string): ManagedAccountSelector;
       get(): AdWordsIterator<ManagedAccount>;
       orderBy(orderBy: string): ManagedAccountSelector;
