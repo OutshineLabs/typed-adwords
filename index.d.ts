@@ -87,8 +87,68 @@ declare namespace AdWordsScripts {
       get(): AdWordsIterator<AdParam>;
     }
 
-    interface Ad extends AdWordsEntity {
+    type ApprovalStatus =
+        "APPROVED"
+      | "DISAPPROVED"
+      | "FAMILY_SAFE"
+      | "NON_FAMILY_SAFE"
+      | "PORN"
+      | "UNCHECKED";
 
+    type AdType =
+        "EXPANDED_TEXT_AD"
+      | "IMAGE_AD"
+      | "MOBILE_AD"
+      | "MOBILE_IMAGE_AD"
+      | "PRODUCT_AD"
+      | "RICH_MEDIA_AD"
+      | "TEMPLATE_AD"
+      | "TEXT_AD";
+
+    interface Ad extends AdWordsEntity {
+      /**
+       * Applies a label to the ad. name of the label is case-sensitive. Operation will fail if the
+       * label with the specified name does not already exist in the account.
+       *
+       * Note that the ad cannot not have more than 50 labels.
+       */
+      applyLabel(label: string): void;
+
+      // FIXME : This should return an AdViewSpace
+      asType(): any;
+
+      enable(): void;
+      getAdGroup(): AdGroup;
+      getAprovalStatus(): ApprovalStatus;
+      getCampaign(): Campaign;
+      getDescription1(): string;
+      getDescription2(): string;
+      getDisapprovalReasons(): string[];
+      getDisplayUrl(): string;
+      getHeadline(): string;
+      getId(): number;
+
+      // FIXME : Should return a Stats object.
+      getStatsFor(dateRange: string): any;
+      getStatsFor(dateFrom: string | AdWordsDateObject, dateTo: string | AdWordsDateObject): any;
+
+      getType(): AdType;
+      isEnabled(): boolean;
+      isMobilePreferred(): boolean;
+      isPaused(): boolean;
+
+      // FIXME : This should return an AdTypeSpace
+      isType(): any;
+
+      // FIXME : This should return an AdWordsSelector<Label>
+      labels(): AdWordsSelector<any>;
+
+      pause(): void;
+      remove(): void;
+      removeLabel(label: string): void;
+
+      // FIXME : This should return AdUrls
+      urls(): any;
     }
 
     interface AdGroup extends AdWordsEntity {
@@ -169,6 +229,7 @@ declare namespace AdWordsScripts {
 
     interface Campaign extends AdWordsEntity {
       adGroups(): AdWordsSelector<AdGroup>;
+      ads(): AdWordsSelector<Ad>;
     }
 
     interface AdWordsApp {
