@@ -308,6 +308,19 @@ declare namespace AdWordsScripts {
       address?: AddressObject
     };
 
+    type Audience = any;
+
+    type Placement = any;
+
+    type Topic = any;
+
+    interface Display {
+      audiences(): AdWordsSelector<Audience>;
+      keywords(): AdWordsSelector<Keyword>;
+      placements(): AdWordsSelector<Placement>;
+      topics(): AdWordsSelector<Topic>;
+    }
+
     // TODO : Define Review
     type Review = any;
 
@@ -414,6 +427,7 @@ declare namespace AdWordsScripts {
       ads(): AdWordsSelector<Ad>;
       campaigns(): AdWordsSelector<Campaign>;
       createLabel(name: string, description?: string, backgroundColor?: string): void;
+      display(): Display;
       keywords(): AdWordsSelector<Keyword>;
       labels(): AdWordsSelector<Label>;
       report(query, options?: ReportQueryOptions): Report;
