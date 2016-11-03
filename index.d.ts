@@ -94,6 +94,8 @@ declare namespace AdWordsScripts {
       // TODO : Complete the Keyword interface
     }
 
+    type ExcludedKeyword = any;
+
     interface AdParam extends AdWordsEntity {
       getAdGroup(): AdGroup;
       getIndex(): number;
@@ -179,9 +181,6 @@ declare namespace AdWordsScripts {
 
     // TODO : Define AdGroupDevices
     type AdGroupDevices = any;
-
-    // TODO : Define AdGroupDisplay
-    type AdGroupDisplay = any;
 
     // TODO : Define AdGroupExtensions
     type AdGroupExtensions = any;
@@ -310,9 +309,21 @@ declare namespace AdWordsScripts {
 
     type Audience = any;
 
+    type ExcludedAudience = any;
+
     type Placement = any;
 
+    type ExcludedPlacement = any;
+
+    type PlacementBuilder = any;
+
     type Topic = any;
+
+    type ExcludedTopic = any;
+
+    type TopicBuilder = any;
+
+    type AudienceBuilder = any;
 
     interface Display {
       audiences(): AdWordsSelector<Audience>;
@@ -321,14 +332,27 @@ declare namespace AdWordsScripts {
       topics(): AdWordsSelector<Topic>;
     }
 
+    interface ComplexDisplay extends Display {
+      excludedAudiences(): AdWordsSelector<ExcludedAudience>;
+      excludedKeywords(): AdWordsSelector<ExcludedKeyword>;
+      excludedPlacements(): AdWordsSelector<ExcludedPlacement>;
+      excludedTopics(): AdWordsSelector<ExcludedTopic>;
+      newAudenceBuilder(): AudienceBuilder;
+      newKeywordBuilder(): KeywordBuilder;
+      newPlacementBuilder(): PlacementBuilder;
+      newTopicBuilder(): TopicBuilder;
+    }
+
+    type CampaignDisplay = ComplexDisplay;
+
+    type AdGroupDisplay = ComplexDisplay;
+
     // TODO : Define Review
     type Review = any;
 
     type ReviewOperation = AdWordsOperation<Review>;
 
     type CampaignBidding = any;
-
-    type CampaignDisplay = any;
 
     type CampaignExtensions = any;
 
