@@ -260,8 +260,15 @@ declare namespace AdWordsScripts {
     // TODO : Define Callout interface
     type Callout = any;
 
-    // TODO : Define ExcludedPlacementList
-    type ExcludedPlacementList = any;
+    interface ExcludedPlacementList extends AdWordsEntity {
+      addExcludedPlacement(url: string): void;
+      addExcludedPlacements(urls: string[]): void;
+      campaigns(): AdWordsSelector<Campaign>;
+      excludedPlacements(): AdWordsSelector<ExcludedPlacement>;
+      getId(): number;
+      getName(): string;
+      setName(name: string): void;
+    }
 
     // TODO : Define TargetedLocation interface
     type TargetedLocation = any;
@@ -311,9 +318,26 @@ declare namespace AdWordsScripts {
 
     type ExcludedAudience = any;
 
-    type Placement = any;
+    interface SimplePlacement {
+      getAdGroup(): AdGroup;
+      getCampaign(): Campaign;
+      getId(): number;
+      getUrl(): string;
+      remove(): void
+    }
 
-    type ExcludedPlacement = any;
+    type ExcludedPlacement = SimplePlacement;
+
+    interface Placement extends SimplePlacement {
+      bidding(): PlacementBidding;
+      getStatsFor(dateRange: DateRange): Stats;
+      getStatsFor(dateFrom: string | AdWordsDate, dateTo: string | AdWordsDate): Stats;
+      isEnabled(): boolean;
+      isManaged(): boolean;
+      isPaused(): boolean;
+    }
+
+    type PlacementBidding = any;
 
     type PlacementBuilder = any;
 
@@ -378,6 +402,11 @@ declare namespace AdWordsScripts {
     type CampaignTargeting = any;
 
     type CampaignUrls = any;
+
+    type CampaignStatus =
+        "ENABLED"
+      | "PAUSED"
+      | "REMOVED";
 
     interface Campaign extends AdWordsEntity {
       adGroups(): AdWordsSelector<AdGroup>;
@@ -452,6 +481,7 @@ declare namespace AdWordsScripts {
       campaigns(): AdWordsSelector<Campaign>;
       createLabel(name: string, description?: string, backgroundColor?: string): void;
       display(): Display;
+      excludedPlacementLists(): AdWordsSelector<ExcludedPlacementList>;
       keywords(): AdWordsSelector<Keyword>;
       labels(): AdWordsSelector<Label>;
       report(query, options?: ReportQueryOptions): Report;
